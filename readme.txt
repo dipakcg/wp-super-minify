@@ -8,10 +8,10 @@ Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A very light weight plugin which combine and compress HTML, JavaScript and CSS files to improve page load speed.
+A very light weight plugin, combine and compress HTML, JavaScript and CSS files to improve page load speed.
 
 == Description ==
-This light weight plugin combine and compress HTML, JavaScript and CSS files to improve page load speed.
+This plugin combine and compress HTML, JavaScript and CSS files to improve page load speed.
 
 By activating this plugin, you will see the source of your HTML, inline JavaScript and CSS are now compressed. The size will be smaller and quite helpful to improve your page load speed as well as google page speed and yslow grade (if you care).
 
