@@ -1,0 +1,20 @@
+.wpsmy_settings {
+	font-size: 16px !important;
+}
+.wpsmy_admin_dev_sidebar_div {
+	width:300px;
+	height:300px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	background-color:#FFFFFF;
+	padding: 20px 0 0 30px;
+}
+.wpsmy_admin_dev_sidebar {
+	font-size: 13px;
+	margin: 0 20px 5px 0;
+	display: block;
+}
+.wpsmy_admin_dev_sidebar a{
+	text-decoration: none;
+}
