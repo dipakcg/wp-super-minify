@@ -16,7 +16,8 @@ This plugin combine and compress HTML, JavaScript and CSS files to improve page 
 By activating this plugin, you will see the source of your HTML, inline JavaScript and CSS are now compressed. The size will be smaller and quite helpful to improve your page load speed as well as google page speed and yslow grade (if you care).
 
 To check whether this plugin works properly, simply view your site source or press Ctrl + U from your keyboard. In the end of the source, you should see message like:
-*** Total size saved ...% from ... bytes. Currently ... bytes.
+
+*** Total size saved ___%. From ___ bytes, now ___ bytes. ***
 
 == Installation ==
 1. Upload the `wp-super-minify` folder to the `/wp-content/plugins/` directory

@@ -136,7 +136,7 @@ class wpsmy_html_compression
 
 		$savings = round($savings, 2);
 
-		return '<!--'.PHP_EOL.'*** HTML, JavaScript and CSS of this site is combined and compressed by WP Super Minify plugin v1.0 - http://wordpress.org/plugins/wp-super-minify ***'.PHP_EOL.'*** Total size saved '.$savings.'% from '.$raw.' bytes. Currently '.$compressed.' bytes. ***'.PHP_EOL.'-->';
+		return '<!--'.PHP_EOL.'*** HTML, JavaScript and CSS of this site is combined and compressed by WP Super Minify plugin v1.0 - http://wordpress.org/plugins/wp-super-minify ***'.PHP_EOL.'*** Total size saved '.$savings.'%. From '.$raw.' bytes, now '.$compressed.' bytes. ***'.PHP_EOL.'-->';
 	}
 
 	protected function minifyHTML($html)
