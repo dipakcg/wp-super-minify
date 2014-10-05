@@ -57,8 +57,6 @@ function wpsmy_admin_options() {
         update_option( $combine_js, $combine_js_val );
         update_option( $combine_css, $combine_css_val );
 
-        add_action('get_header', 'wpsmy_html_compression_start');
-
         // Put an settings updated message on the screen
    	?>
    	<div class="updated"><p><strong>Settings Saved.</strong></p></div>
@@ -140,7 +138,7 @@ class wpsmy_html_compression
 
 		$savings = round($savings, 2);
 
-		return PHP_EOL.'<!--'.PHP_EOL.'*** HTML, JavaScript and CSS of this site is combined and compressed by WP Super Minify plugin v1.0 - http://wordpress.org/plugins/wp-super-minify'.PHP_EOL.'*** Total size saved '.$savings.'% from '.$raw.' bytes. Currently '.$compressed.' bytes.'.PHP_EOL.'-->';
+		return '<!--'.PHP_EOL.'*** HTML, JavaScript and CSS of this site is combined and compressed by WP Super Minify plugin v1.0 - http://wordpress.org/plugins/wp-super-minify'.PHP_EOL.'*** Total size saved '.$savings.'% from '.$raw.' bytes. Currently '.$compressed.' bytes.'.PHP_EOL.'-->';
 	}
 
 	protected function minifyHTML($html)
@@ -159,10 +157,12 @@ class wpsmy_html_compression
 
 			if (is_null($tag)) {
 				if ( !empty($token['script']) ) {
-					$strip = $this->compress_js;
+					// $strip = $this->compress_js;
+					$strip = ( get_option('wpsmy_combine_js', 1) == 'on' ? true : false );
 				}
 				else if ( !empty($token['style']) ) {
-					$strip = $this->compress_css;
+					// $strip = $this->compress_css;
+					$strip = ( get_option('wpsmy_combine_css', 1) == 'on' ? true : false );
 				}
 				else if ($content == '<!--wp-html-compression no compression-->') {
 					$overriding = !$overriding;
@@ -238,8 +238,6 @@ class wpsmy_html_compression
 
 function wpsmy_html_compression_finish($html)
 {
-	// $compress_js_param = ( get_option('wpsmy_combine_js') == 'on' ? true : false );
-	// $compress_css_param = ( get_option('wpsmy_combine_css') == 'on' ? true : false );
 	return new wpsmy_html_compression($html);
 }
 
