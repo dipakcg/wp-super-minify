@@ -8,7 +8,7 @@ Version: 1.0
 Author URI: http://www.dipakgajjar.com/
 */
 
-// Important: Don't forget to change version number at line line 7, 131 and 200.
+// Important: Don't forget to change version number at line line 7 and 139.
 // Register with hook 'wp_enqueue_scripts', which can be used for front end CSS and JavaScript
 add_action( 'admin_init', 'wpsmy_add_stylesheet' );
 function wpsmy_add_stylesheet() {
@@ -107,15 +107,13 @@ register_activation_hook( __FILE__, 'wpsmy_activate_plugin' );
 class wpsmy_html_compression
 {
 	// Settings
-	// protected $compress_css = ( get_option('wpsmy_combine_js') == 'on' ? true : false );
-	// protected $compress_js = ( get_option('wpsmy_combine_css') == 'on' ? true : false );
-	protected $compress_js;
-	protected $compress_css;
 	protected $info_comment = true;
 	protected $remove_comments = true;
 
 	// Variables
 	protected $html;
+	protected $compress_js;
+	protected $compress_css;
 
 	public function __construct($html)
 	{
@@ -138,7 +136,7 @@ class wpsmy_html_compression
 
 		$savings = round($savings, 2);
 
-		return '<!--'.PHP_EOL.'*** HTML, JavaScript and CSS of this site is combined and compressed by WP Super Minify plugin v1.0 - http://wordpress.org/plugins/wp-super-minify'.PHP_EOL.'*** Total size saved '.$savings.'% from '.$raw.' bytes. Currently '.$compressed.' bytes.'.PHP_EOL.'-->';
+		return '<!--'.PHP_EOL.'*** HTML, JavaScript and CSS of this site is combined and compressed by WP Super Minify plugin v1.0 - http://wordpress.org/plugins/wp-super-minify ***'.PHP_EOL.'*** Total size saved '.$savings.'% from '.$raw.' bytes. Currently '.$compressed.' bytes. ***'.PHP_EOL.'-->';
 	}
 
 	protected function minifyHTML($html)
@@ -157,11 +155,11 @@ class wpsmy_html_compression
 
 			if (is_null($tag)) {
 				if ( !empty($token['script']) ) {
-					// $strip = $this->compress_js;
+					// Get the option value of Compress JavaScript
 					$strip = ( get_option('wpsmy_combine_js', 1) == 'on' ? true : false );
 				}
 				else if ( !empty($token['style']) ) {
-					// $strip = $this->compress_css;
+					// Get the option value of Compress CSS
 					$strip = ( get_option('wpsmy_combine_css', 1) == 'on' ? true : false );
 				}
 				else if ($content == '<!--wp-html-compression no compression-->') {
