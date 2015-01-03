@@ -3,12 +3,20 @@
 Plugin Name: WP Super Minify
 Plugin URI: https://github.com/dipakcg/wp-super-minify
 Description: This plugin combine and compress HTML, JavaScript and CSS files to improve page load speed.
+Version: 1.1
 Author: Dipak C. Gajjar
-Version: 1.0
-Author URI: http://www.dipakgajjar.com/
+Author URI: http://dipakgajjar.com
 */
 
-// Important: Don't forget to change version number at line line 7 and 139.
+// Define plugin version for future releases
+if (!defined('WPSMY_PLUGIN_VERSION')) {
+    define('WPSMY_PLUGIN_VERSION', 'wpsmy_plugin_version');
+}
+if (!defined('WPSMY_PLUGIN_VERSION_NUM')) {
+    define('WPSMY_PLUGIN_VERSION_NUM', '1.1');
+}
+update_option(WPSMY_PLUGIN_VERSION, WPSMY_PLUGIN_VERSION_NUM);
+
 // Register with hook 'wp_enqueue_scripts', which can be used for front end CSS and JavaScript
 add_action( 'admin_init', 'wpsmy_add_stylesheet' );
 function wpsmy_add_stylesheet() {
@@ -21,7 +29,7 @@ function wpsmy_add_stylesheet() {
 add_action( 'admin_menu', 'wpsmy_add_admin_menu' );
 function wpsmy_add_admin_menu() {
 	// add_options_page( $page_title, $menu_title, $capability, $menu_slug, $function);
-	add_menu_page( 'WP Super Minify : Settings', 'WP Super Minify', 'manage_options', 'wp-super-minify', 'wpsmy_admin_options', plugins_url('assets/images/wpsmy-icon-24x24.png', __FILE__) );
+	add_menu_page( 'WP Super Minify Settings', 'WP Super Minify', 'manage_options', 'wp-super-minify', 'wpsmy_admin_options', plugins_url('assets/images/wpsmy-icon-24x24.png', __FILE__) );
 }
 
 function wpsmy_admin_options() {
@@ -84,7 +92,7 @@ function wpsmy_admin_options() {
 	<span class="wpsmy_admin_dev_sidebar"> <?php echo '<img src="' . plugins_url( 'assets/images/wpsmy-other-plugins-16x16.png' , __FILE__ ) . '" > ';  ?> <a href="http://profiles.wordpress.org/dipakcg#content-plugins" target="_blank"> Get my other plugins </a> </span>
 	<span class="wpsmy_admin_dev_sidebar"> <?php echo '<img src="' . plugins_url( 'assets/images/wpsmy-twitter-16x16.png' , __FILE__ ) . '" > ';  ?>Follow me on Twitter: <a href="https://twitter.com/dipakcgajjar" target="_blank">@dipakcgajjar</a> </span>
 	<br />
-	<span class="wpsmy_admin_dev_sidebar" style="float: right;"> Version: <strong> 1.0 </strong> </span>
+	<span class="wpsmy_admin_dev_sidebar" style="float: right;"> Version: <strong> <?php echo get_option('wpsmy_plugin_version'); ?> </strong> </span>
 	</div>
 	</td>
 	</tr>
@@ -93,156 +101,63 @@ function wpsmy_admin_options() {
 	<?php
 }
 
-// Calling this function will make flush_rules to be called at the end of the PHP execution
+// Make the default value of enable javascript and enable CSS to true on plugin activation
 function wpsmy_activate_plugin() {
 
     // Save default options value in the database
     update_option( 'wpsmy_combine_js', 'on' );
     update_option( 'wpsmy_combine_css', 'on' );
 }
-
-// On plugin activation, call the function that will make flush_rules to be called at the end of the PHP execution
 register_activation_hook( __FILE__, 'wpsmy_activate_plugin' );
 
-class wpsmy_html_compression
-{
-	// Settings
-	protected $info_comment = true;
-	protected $remove_comments = true;
+// Remove filters/functions on plugin deactivation
+function wpsmy_deactivate_plugin() {
+	delete_option( 'wpsmy_plugin_version' );
+}
+register_deactivation_hook( __FILE__, 'wpsmy_deactivate_plugin' );
 
-	// Variables
-	protected $html;
-	protected $compress_js;
-	protected $compress_css;
+function wpsmy_minify_html ($buffer) {
+	$wpsmy_plugin_version = get_option('wpsmy_plugin_version');
+    /* if ( is_user_logged_in() ) {
+        $buffer .= PHP_EOL . '<!--' . PHP_EOL . '*** This site runs WP Super Minify plugin v'. $wpsmy_plugin_version . ' - http://wordpress.org/plugins/wp-super-minify ***' . PHP_EOL . '*** User is logged in, compression is not applied. ***' . PHP_EOL . '-->';
+        return $buffer; // for loggedin users minify is not required
+    } else { */
+        $initial = strlen($buffer);
+        $minify_lib_path = plugin_dir_path( __FILE__ ) . 'includes/min';
 
-	public function __construct($html)
-	{
-		if (!empty($html)) {
-			$this->parseHTML($html);
+        if (!class_exists('Minify_HTML')) {
+			require_once("$minify_lib_path/lib/Minify/HTML.php");
+			ini_set('include_path', ini_get('include_path').":$minify_lib_path/lib");
+			require_once("$minify_lib_path/lib/Minify/CSS.php");
+			require_once("$minify_lib_path/lib/JSMin.php");
+			require ("$minify_lib_path/lib/Minify/Loader.php");
+			Minify_Loader::register();
 		}
-	}
-
-	public function __toString()
-	{
-		return $this->html;
-	}
-
-	protected function bottomComment($raw, $compressed)
-	{
-		$raw = strlen($raw);
-		$compressed = strlen($compressed);
-
-		$savings = ($raw-$compressed) / $raw * 100;
-
-		$savings = round($savings, 2);
-
-		return '<!--'.PHP_EOL.'*** HTML, JavaScript and CSS of this site is combined and compressed by WP Super Minify plugin v1.0 - http://wordpress.org/plugins/wp-super-minify ***'.PHP_EOL.'*** Total size saved '.$savings.'%. From '.$raw.' bytes, now '.$compressed.' bytes. ***'.PHP_EOL.'-->';
-	}
-
-	protected function minifyHTML($html)
-	{
-		$pattern = '/<(?<script>script).*?<\/script\s*>|<(?<style>style).*?<\/style\s*>|<!(?<comment>--).*?-->|<(?<tag>[\/\w.:-]*)(?:".*?"|\'.*?\'|[^\'">]+)*>|(?<text>((<[^!\/\w.:-])?[^<]*)+)|/si';
-		preg_match_all($pattern, $html, $matches, PREG_SET_ORDER);
-		$overriding = false;
-		$raw_tag = false;
-		// Variable reused for output
-		$html = '';
-		foreach ($matches as $token)
-		{
-			$tag = (isset($token['tag'])) ? strtolower($token['tag']) : null;
-
-			$content = $token[0];
-
-			if (is_null($tag)) {
-				if ( !empty($token['script']) ) {
-					// Get the option value of Compress JavaScript
-					$strip = ( get_option('wpsmy_combine_js', 1) == 'on' ? true : false );
-				}
-				else if ( !empty($token['style']) ) {
-					// Get the option value of Compress CSS
-					$strip = ( get_option('wpsmy_combine_css', 1) == 'on' ? true : false );
-				}
-				else if ($content == '<!--wp-html-compression no compression-->') {
-					$overriding = !$overriding;
-
-					// Don't print the comment
-					continue;
-				}
-				else if ($this->remove_comments) {
-					if (!$overriding && $raw_tag != 'textarea') {
-						// Remove any HTML comments, except MSIE conditional comments
-						$content = preg_replace('/<!--(?!\s*(?:\[if [^\]]+]|<!|>))(?:(?!-->).)*-->/s', '', $content);
-					}
-				}
-			}
-			else {
-				if ($tag == 'pre' || $tag == 'textarea') {
-					$raw_tag = $tag;
-				}
-				else if ($tag == '/pre' || $tag == '/textarea') {
-					$raw_tag = false;
-				}
-				else {
-					if ($raw_tag || $overriding) {
-						$strip = false;
-					}
-					else {
-						$strip = true;
-
-						// Remove any empty attributes, except:
-						// action, alt, content, src
-						$content = preg_replace('/(\s+)(\w++(?<!\baction|\balt|\bcontent|\bsrc)="")/', '$1', $content);
-
-						// Remove any space before the end of self-closing XHTML tags
-						// JavaScript excluded
-						$content = str_replace(' />', '/>', $content);
-					}
-				}
-			}
-
-			if ($strip) {
-				$content = $this->removeWhiteSpace($content);
-			}
-
-			$html .= $content;
+		if ( get_option('wpsmy_combine_js', 1) == 'on') {
+			$buffer = Minify_HTML::minify($buffer,
+				  array('jsMinifier' => array('JSMin', 'minify')));
+		}
+		if ( get_option('wpsmy_combine_css', 1) == 'on') {
+			$buffer = Minify_HTML::minify($buffer,
+				  array('cssMinifier' => array('Minify_CSS', 'minify')));
 		}
 
-		return $html;
-	}
+		$final = strlen($buffer);
+		$savings = round((($initial-$final)/$initial*100), 3);
 
-	public function parseHTML($html)
-	{
-		$this->html = $this->minifyHTML($html);
+		// $buffer .= "<br/><!-- Uncompressed size: $initial bytes; Compressed size: $final bytes; $savings% savings -->";
 
-		if ($this->info_comment) {
-			$this->html .= "\n" . $this->bottomComment($html, $this->html);
-		}
-	}
-
-	protected function removeWhiteSpace($str)
-	{
-		$str = str_replace("\t", ' ', $str);
-		$str = str_replace("\n",  '', $str);
-		$str = str_replace("\r",  '', $str);
-
-		while (stristr($str, '  '))
-		{
-			$str = str_replace('  ', ' ', $str);
+		if ($savings != 0) {
+			$buffer .= PHP_EOL . '<!--' . PHP_EOL . '*** This site runs WP Super Minify plugin v'. $wpsmy_plugin_version .' - http://wordpress.org/plugins/wp-super-minify ***' . PHP_EOL . '*** Total size saved: ' . $savings . '% | Size before compression: ' . $initial . ' bytes | Size after compression: ' . $final . ' bytes. ***' . PHP_EOL . '-->';
 		}
 
-		return $str;
-	}
+        return $buffer;
+    // }
 }
 
-function wpsmy_html_compression_finish($html)
-{
-	return new wpsmy_html_compression($html);
+// Minifying HTML
+function wpsmy_minify() {
+    ob_start('wpsmy_minify_html');
 }
-
-function wpsmy_html_compression_start()
-{
-	ob_start('wpsmy_html_compression_finish');
-}
-
-add_action('get_header', 'wpsmy_html_compression_start');
+add_action('get_header', 'wpsmy_minify');
 ?>
