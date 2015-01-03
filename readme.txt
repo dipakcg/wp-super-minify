@@ -11,7 +11,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 A very light weight plugin, combines, minifies, and caches JavaScript and CSS files on demand to speed up page loads.
 
 == Description ==
-This plugin combines, minifies, and caches JavaScript and CSS files on demand to speed up page loads, using [Minify PHP Framework] (https://code.google.com/p/minify/).
+This plugin combines, minifies, and caches JavaScript and CSS files on demand to speed up page loads, using [Minify PHP Framework](https://code.google.com/p/minify/).
 
 By activating this plugin, you will see the source of your HTML, inline JavaScript and CSS are now compressed. The size will be smaller and quite helpful to improve your page load speed as well as google page speed and yslow grade (if you care).
 
@@ -45,7 +45,7 @@ Pretty much, yeah.
 == Changelog ==
 = 1.1, Jan 03, 2015 =
 * Fixed compression related issues
-* Replaced manual compression functions with the latest version of [Minify PHP Framework] (https://code.google.com/p/minify/)
+* Replaced manual compression functions with the latest version of [Minify PHP Framework](https://code.google.com/p/minify/)
 
 = 1.0, Oct 04, 2014 =
 * Initial release
