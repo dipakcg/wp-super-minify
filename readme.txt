@@ -48,7 +48,7 @@ Pretty much, yeah.
 
 == Changelog ==
 = 1.3, March 12, 2015 =
-* Added support for
+* Added support for combine external javascript and css into a single file
 
 = 1.2, Feb 28, 2015 =
 * Added News and Updates section in admin options
