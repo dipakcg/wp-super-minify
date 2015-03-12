@@ -1,19 +1,19 @@
 === WP Super Minify ===
 Contributors: dipakcg
-Tags: minify, compress, combine, html, css, javascript, js, performance, load, speed, time, yslow, pagespeed
+Tags: minify, compress, combine, html, css, javascript, js, performance, load, speed, time, yslow, pagespeed, external
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3S8BRPLWLNQ38
 Requires at least: 3.5
-Tested up to: 4.1
-Stable tag: 1.1
+Tested up to: 4.1.1
+Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A very light weight plugin, combines, minifies, and caches JavaScript and CSS files on demand to speed up page loads.
+A very light weight plugin, minifies, caches and combine JavaScript and CSS files into a single file on demand to speed up page loads.
 
 == Description ==
-This plugin combines, minifies, and caches JavaScript and CSS files on demand to speed up page loads, using [Minify PHP Framework](https://code.google.com/p/minify/).
+This plugin minifies, caches and combine JavaScript and CSS files into a single file on demand to speed up page loads, using [Minify PHP Framework](https://code.google.com/p/minify/) and [minit](https://github.com/kasparsd/minit).
 
-By activating this plugin, you will see the source of your HTML, inline JavaScript and CSS are now compressed. The size will be smaller and quite helpful to improve your page load speed as well as google page speed and yslow grade (if you care).
+By activating this plugin, you will see the source of your HTML, inline JavaScript and CSS are now compressed and your external Javascript and CSS files are combined into a single file. The size will be smaller and quite helpful to improve your page load speed as well as google page speed and yslow grade (if you care).
 
 To check whether this plugin works properly, simply view your site source or press Ctrl + U from your keyboard. In the end of the source, you should see message something like:
 
@@ -29,7 +29,7 @@ To check whether this plugin works properly, simply view your site source or pre
 == Frequently Asked Questions ==
 = What does this plugin do? =
 
-This plugin combines, minifies, and caches JavaScript and CSS files on demand to speed up page loads.
+This plugin minifies, caches and combine JavaScript and CSS files into a single file on demand to speed up page loads. It uses the latest modified time in filename generation to ensure freshness, and loads all external Javascript files asynchronously.
 
 = Any specific requirements for this plugin to work? =
 
@@ -42,7 +42,17 @@ Pretty much, yeah.
 == Screenshots ==
 1. Admin Settings
 
+2. Combined CSS files into a single CSS file (view source)
+
+3. Sample results (pingdom)
+
 == Changelog ==
+= 1.3, March 12, 2015 =
+* Added support for
+
+= 1.2, Feb 28, 2015 =
+* Added News and Updates section in admin options
+
 = 1.1, Jan 03, 2015 =
 * Fixed compression related issues
 * Replaced manual compression functions with the latest version of [Minify PHP Framework](https://code.google.com/p/minify/)

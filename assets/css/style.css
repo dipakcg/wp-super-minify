@@ -18,3 +18,17 @@
 .wpsmy_admin_dev_sidebar a{
 	text-decoration: none;
 }
+.news_section {
+	border-radius: 10px;
+	background-color: #FFFFFF;
+	padding: 20px 20px 20px 20px;
+	width: 98%;
+}
+
+a.rsswidget {
+	font-size: 16px !important;
+	text-decoration: none !important;
+}
+.rss-widget ul li {
+	margin-bottom: 25px !important;
+}
