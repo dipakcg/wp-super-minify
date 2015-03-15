@@ -3,7 +3,7 @@
 Plugin Name: WP Super Minify
 Plugin URI: https://github.com/dipakcg/wp-super-minify
 Description: Minifies, caches and combine JavaScript and CSS files into a single file to improve page load time.
-Version: 1.3
+Version: 1.3.1
 Author: Dipak C. Gajjar
 Author URI: http://dipakgajjar.com
 */
@@ -13,7 +13,7 @@ if (!defined('WPSMY_PLUGIN_VERSION')) {
     define('WPSMY_PLUGIN_VERSION', 'wpsmy_plugin_version');
 }
 if (!defined('WPSMY_PLUGIN_VERSION_NUM')) {
-    define('WPSMY_PLUGIN_VERSION_NUM', '1.3');
+    define('WPSMY_PLUGIN_VERSION_NUM', '1.3.1');
 }
 update_option(WPSMY_PLUGIN_VERSION, WPSMY_PLUGIN_VERSION_NUM);
 
@@ -30,6 +30,20 @@ add_action( 'admin_menu', 'wpsmy_add_admin_menu' );
 function wpsmy_add_admin_menu() {
 	// add_options_page( $page_title, $menu_title, $capability, $menu_slug, $function);
 	add_menu_page( 'WP Super Minify Settings', 'WP Super Minify', 'manage_options', 'wp-super-minify', 'wpsmy_admin_options', plugins_url('assets/images/wpsmy-icon-24x24.png', __FILE__) );
+}
+
+/* Stop contact form 7 from conflicting with our jquery based code */
+add_action( ‘wp_print_scripts’, ‘wpsmy_deregister_wpcf7_javascript’, 100 );
+function wpsmy_deregister_wpcf7_javascript() {
+	wp_deregister_script( 'contact-form-7' );
+}
+
+/* Include jQuery - it may required for custom js added in theme's header.php */
+if (!is_admin()) add_action("wp_enqueue_scripts", "wpsmy_prioritize_jquery", 11);
+function wpsmy_prioritize_jquery() {
+   wp_deregister_script('jquery');
+   wp_register_script('jquery', "http" . ($_SERVER['SERVER_PORT'] == 443 ? "s" : "") . "://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js", false, null);
+   wp_enqueue_script('jquery');
 }
 
 function wpsmy_admin_options() {
@@ -188,11 +202,15 @@ class Wpsmy {
 	private $wpsmy_done = array();
 	private $async_queue = array();
 	private function __construct() {
-		add_filter( 'print_scripts_array', array( $this, 'init_wpsmy_js' ) );
-		add_filter( 'print_styles_array', array( $this, 'init_wpsmy_css' ) );
+		if ( get_option('wpsmy_combine_js', 1) == 'on') {
+			add_filter( 'print_scripts_array', array( $this, 'init_wpsmy_js' ) );
+		}
+		if ( get_option('wpsmy_combine_css', 1) == 'on') {
+			add_filter( 'print_styles_array', array( $this, 'init_wpsmy_css' ) );
+		}
 		// Print external scripts asynchronously in the footer
-		add_action( 'wp_print_footer_scripts', array( $this, 'async_init' ), 5 );
-		add_action( 'wp_print_footer_scripts', array( $this, 'async_print' ), 20 );
+		add_action( 'wp_print_footer_scripts', array( $this, 'async_init' ), 1 );
+		add_action( 'wp_print_footer_scripts', array( $this, 'async_print' ), 5 );
 	}
 	public static function instance() {
 		if ( ! self::$instance )

@@ -4,7 +4,7 @@ Tags: minify, compress, combine, html, css, javascript, js, performance, load, s
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3S8BRPLWLNQ38
 Requires at least: 3.5
 Tested up to: 4.1.1
-Stable tag: 1.3
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -47,6 +47,9 @@ Pretty much, yeah.
 3. Sample results (pingdom)
 
 == Changelog ==
+= 1.3.1, March 15, 2015 =
+* Fixed jQuery conflict (by other plugins)
+
 = 1.3, March 12, 2015 =
 * Added support for combine external javascript and css files into a single file
 
