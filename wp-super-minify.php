@@ -5,7 +5,7 @@ Plugin URI: https://github.com/dipakcg/wp-super-minify
 Description: Minifies, caches and combine inline JavaScript and CSS files to improve page load time.
 Version: 1.3.1
 Author: Dipak C. Gajjar
-Author URI: http://dipakgajjar.com
+Author URI: https://dipakgajjar.com
 */
 
 // Define plugin version for future releases
