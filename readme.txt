@@ -1,10 +1,10 @@
 === WP Super Minify ===
-Contributors: dipakcg
+Contributors: dipakcg, bmcminn
 Tags: minify, compress, combine, html, css, javascript, js, performance, load, speed, time, yslow, pagespeed
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3S8BRPLWLNQ38
 Requires at least: 3.5
 Tested up to: 4.3.1
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,9 @@ Pretty much, yeah.
 1. Admin Settings
 
 == Changelog ==
+= 1.3.2, December 24, 2015 =
+* Added admin option for removing the `This site runs WP Super Minify plugin v...` message in page source due to potential security concerns. Defaults to `on` when plugin is installed
+
 = 1.3.1, March 17, 2015 =
 * Reverted support for combine external javascript and css files into a single file due to conflict with other plugins
 
