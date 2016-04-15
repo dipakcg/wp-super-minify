@@ -3,7 +3,7 @@ Contributors: dipakcg
 Tags: minify, compress, combine, html, css, javascript, js, performance, load, speed, time, yslow, pagespeed
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3S8BRPLWLNQ38
 Requires at least: 3.5
-Tested up to: 4.3.1
+Tested up to: 4.5
 Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -19,7 +19,9 @@ To check whether this plugin works properly, simply view your site source or pre
 
 *** Total size saved: 11.341% | Size before compression: 27104 bytes | Size after compression: 24030 bytes. ***
 
-**P.S. It is aways the best policy to open a [support thread](http://wordpress.org/support/plugin/wp-super-minify) first before posting a negative review.**
+**Follow the development of this plugin on [GitHub](https://github.com/dipakcg/wp-super-minify)**
+
+**P.S. It is always the best policy to open a [support thread](http://wordpress.org/support/plugin/wp-super-minify) first before posting any negative review.**
 
 == Installation ==
 1. Upload the `wp-super-minify` folder to the `/wp-content/plugins/` directory
@@ -43,6 +45,7 @@ Pretty much, yeah.
 1. Admin Settings
 
 == Changelog ==
+
 = 1.3.1, March 17, 2015 =
 * Reverted support for combine external javascript and css files into a single file due to conflict with other plugins
 
