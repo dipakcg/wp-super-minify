@@ -3,12 +3,12 @@
 }
 .wpsmy_admin_dev_sidebar_div {
 	width:300px;
-	height:300px;
+	height:250px;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
 	background-color:#FFFFFF;
-	padding: 20px 0 0 30px;
+	padding: 10px 0 0 30px;
 }
 .wpsmy_admin_dev_sidebar {
 	font-size: 13px;
@@ -17,6 +17,9 @@
 }
 .wpsmy_admin_dev_sidebar a{
 	text-decoration: none;
+}
+.wpsmy_admin_dev_sidebar img{
+	padding: 5px 5px 0 0;
 }
 .news_section {
 	border-radius: 10px;

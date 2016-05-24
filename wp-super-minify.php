@@ -3,9 +3,9 @@
 Plugin Name: WP Super Minify
 Plugin URI: https://github.com/dipakcg/wp-super-minify
 Description: Minifies, caches and combine inline JavaScript and CSS files to improve page load time.
-Version: 1.3.1
+Version: 1.3.2
 Author: Dipak C. Gajjar
-Author URI: https://dipakgajjar.com
+Author URI: http://dipakgajjar.com
 */
 
 // Define plugin version for future releases
@@ -13,7 +13,7 @@ if (!defined('WPSMY_PLUGIN_VERSION')) {
     define('WPSMY_PLUGIN_VERSION', 'wpsmy_plugin_version');
 }
 if (!defined('WPSMY_PLUGIN_VERSION_NUM')) {
-    define('WPSMY_PLUGIN_VERSION_NUM', '1.3.1');
+    define('WPSMY_PLUGIN_VERSION_NUM', '1.3.2');
 }
 update_option(WPSMY_PLUGIN_VERSION, WPSMY_PLUGIN_VERSION_NUM);
 
@@ -28,9 +28,20 @@ function wpsmy_add_stylesheet() {
 // Register admin menu
 add_action( 'admin_menu', 'wpsmy_add_admin_menu' );
 function wpsmy_add_admin_menu() {
+	// add_menu_page( 'WP Super Minify Settings', 'WP Super Minify', 'manage_options', 'wp-super-minify', 'wpsmy_admin_options', plugins_url('assets/images/wpsmy-icon-24x24.png', __FILE__) );
 	// add_options_page( $page_title, $menu_title, $capability, $menu_slug, $function);
-	add_menu_page( 'WP Super Minify Settings', 'WP Super Minify', 'manage_options', 'wp-super-minify', 'wpsmy_admin_options', plugins_url('assets/images/wpsmy-icon-24x24.png', __FILE__) );
+	add_options_page( 'WP Super Minify', 'WP Super Minify', 'manage_options', 'wp-super-minify', 'wpsmy_admin_options' );
 }
+
+// Add settings link on plugin page
+function wpsmy_settings_link($links) {
+	// $settings_link = '<a href="admin.php?page=wp-performance-score-booster">Settings</a>';
+	$settings_link = '<a href="options-general.php?page=wp-super-minify">Settings</a>';
+	array_unshift($links, $settings_link);
+	return $links;
+}
+$plugin = plugin_basename(__FILE__);
+add_filter("plugin_action_links_$plugin", 'wpsmy_settings_link' );
 
 // Admin options/setting page
 function wpsmy_admin_options() {
@@ -86,10 +97,11 @@ function wpsmy_admin_options() {
 	</td>
 	<td style="text-align: left;">
 	<div class="wpsmy_admin_dev_sidebar_div">
-	<img src="//www.gravatar.com/avatar/38b380cf488d8f8c4007cf2015dc16ac.jpg" width="100px" height="100px" /> <br />
-	<span class="wpsmy_admin_dev_sidebar"> <?php echo '<img src="' . plugins_url( 'assets/images/wpsmy-support-this-16x16.png' , __FILE__ ) . '" > ';  ?> <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3S8BRPLWLNQ38" target="_blank"> Support this plugin and donate </a> </span>
+	<!-- <img src="//www.gravatar.com/avatar/38b380cf488d8f8c4007cf2015dc16ac.jpg" width="100px" height="100px" /> -->
+	<br />
+	<span class="wpsmy_admin_dev_sidebar"> <?php echo '<img src="' . plugins_url( 'assets/images/wpsmy-support-this-16x16.png' , __FILE__ ) . '" > ';  ?> <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3S8BRPLWLNQ38" target="_blank"> Donate and support this plugin </a> </span>
 	<span class="wpsmy_admin_dev_sidebar"> <?php echo '<img src="' . plugins_url( 'assets/images/wpsmy-rate-this-16x16.png' , __FILE__ ) . '" > ';  ?> <a href="http://wordpress.org/support/view/plugin-reviews/wp-super-minify" target="_blank"> Rate this plugin on WordPress.org </a> </span>
-	<span class="wpsmy_admin_dev_sidebar"> <?php echo '<img src="' . plugins_url( 'assets/images/wpsmy-wordpress-16x16.png' , __FILE__ ) . '" > ';  ?> <a href="http://wordpress.org/support/plugin/wp-super-minify" target="_blank"> Get support on on WordPress.org </a> </span>
+	<span class="wpsmy_admin_dev_sidebar"> <?php echo '<img src="' . plugins_url( 'assets/images/wpsmy-wordpress-16x16.png' , __FILE__ ) . '" > ';  ?> <a href="http://wordpress.org/support/plugin/wp-super-minify" target="_blank"> Get support on WordPress.org </a> </span>
 	<span class="wpsmy_admin_dev_sidebar"> <?php echo '<img src="' . plugins_url( 'assets/images/wpsmy-github-16x16.png' , __FILE__ ) . '" > ';  ?> <a href="https://github.com/dipakcg/wp-super-minify" target="_blank"> Contribute development on GitHub </a> </span>
 	<span class="wpsmy_admin_dev_sidebar"> <?php echo '<img src="' . plugins_url( 'assets/images/wpsmy-other-plugins-16x16.png' , __FILE__ ) . '" > ';  ?> <a href="http://profiles.wordpress.org/dipakcg#content-plugins" target="_blank"> Get my other plugins </a> </span>
 	<span class="wpsmy_admin_dev_sidebar"> <?php echo '<img src="' . plugins_url( 'assets/images/wpsmy-twitter-16x16.png' , __FILE__ ) . '" > ';  ?>Follow me on Twitter: <a href="https://twitter.com/dipakcgajjar" target="_blank">@dipakcgajjar</a> </span>
@@ -106,18 +118,21 @@ function wpsmy_admin_options() {
     echo '<td width="50%" valign="top">';
     echo '<h1>News & Updates from Dipak C. Gajjar</h1>';
     echo '<div class="rss-widget">';
-     wp_widget_rss_output(array(
+    /* wp_widget_rss_output(array(
           'url' => 'https://dipakgajjar.com/category/news/feed/?refresh='.rand(10,100).'',  // feed URL
           'title' => 'News & Updates from Dipak C. Gajjar',
           'items' => 3, // nubmer of posts to display
           'show_summary' => 1,
           'show_author' => 0,
           'show_date' => 0
-     ));
-     echo '</div> <td width="5%"> &nbsp </td>';
-     echo '</td> <td valign="top">';
-     ?>
-     <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/dipakcgajjar" data-widget-id="547661367281729536">Tweets by @dipakcgajjar</a>
+     )); */
+     /* Load the news content from Dropbox url */
+    $news_content = wp_remote_fopen("https://dl.dropboxusercontent.com/u/21966579/news-and-updates.html");
+    echo $news_content;
+    echo '</div> <td width="5%"> &nbsp </td>';
+    echo '</td> <td valign="top">';
+    ?>
+    <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/dipakcgajjar" data-widget-id="547661367281729536">Tweets by @dipakcgajjar</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 	<?php echo '</td> </tr> </table>';
 }

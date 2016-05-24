@@ -4,7 +4,7 @@ Tags: minify, compress, combine, html, css, javascript, js, performance, load, s
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3S8BRPLWLNQ38
 Requires at least: 3.5
 Tested up to: 4.5
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,11 @@ Pretty much, yeah.
 1. Admin Settings
 
 == Changelog ==
+
+= 1.3.2, May 24, 2016 =
+* Added Settings option (link) under Plugins page
+* Moved plugin options (settings) from sidebar to under Settings
+* Updated settings page
 
 = 1.3.1, March 17, 2015 =
 * Reverted support for combine external javascript and css files into a single file due to conflict with other plugins
