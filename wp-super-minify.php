@@ -3,7 +3,7 @@
 Plugin Name: WP Super Minify
 Plugin URI: https://github.com/dipakcg/wp-super-minify
 Description: Minifies, caches and combine inline JavaScript and CSS files to improve page load time.
-Version: 1.3.2
+Version: 1.4
 Author: Dipak C. Gajjar
 Author URI: http://dipakgajjar.com
 */
@@ -13,7 +13,7 @@ if (!defined('WPSMY_PLUGIN_VERSION')) {
     define('WPSMY_PLUGIN_VERSION', 'wpsmy_plugin_version');
 }
 if (!defined('WPSMY_PLUGIN_VERSION_NUM')) {
-    define('WPSMY_PLUGIN_VERSION_NUM', '1.3.2');
+    define('WPSMY_PLUGIN_VERSION_NUM', '1.4');
 }
 update_option(WPSMY_PLUGIN_VERSION, WPSMY_PLUGIN_VERSION_NUM);
 
@@ -21,7 +21,7 @@ update_option(WPSMY_PLUGIN_VERSION, WPSMY_PLUGIN_VERSION_NUM);
 add_action( 'admin_init', 'wpsmy_add_stylesheet' );
 function wpsmy_add_stylesheet() {
     // Respects SSL, Style.css is relative to the current file
-    wp_register_style( 'wpsmy-stylesheet', plugins_url('assets/css/style.css', __FILE__) );
+    wp_register_style( 'wpsmy-stylesheet', plugins_url('assets/css/style.min.css', __FILE__) );
     wp_enqueue_style( 'wpsmy-stylesheet' );
 }
 
@@ -42,6 +42,20 @@ function wpsmy_settings_link($links) {
 }
 $plugin = plugin_basename(__FILE__);
 add_filter("plugin_action_links_$plugin", 'wpsmy_settings_link' );
+
+// Adding WordPress plugin meta links
+function wpsmy_plugin_meta_links( $links, $file ) {
+	$plugin = plugin_basename(__FILE__);
+	// Create link
+	if ( $file == $plugin ) {
+		return array_merge(
+			$links,
+			array( '<a href="https://dipakgajjar.com/products/wordpress-speed-optimisation-service?utm_source=plugins%20page&utm_medium=text%20link&utm_campaign=wordplress%20plugins" style="color:#FF0000;" target="_blank">Order WordPress Speed Optimisation Service</a>' )
+		);
+	}
+	return $links;
+}
+add_filter( 'plugin_row_meta', 'wpsmy_plugin_meta_links', 10, 2 );
 
 // Admin options/setting page
 function wpsmy_admin_options() {
@@ -86,10 +100,12 @@ function wpsmy_admin_options() {
 	<form method="post" name="options_form">
 	<input type="hidden" name="<?php echo $hidden_field_name; ?>" value="Y">
 	<p>
-	<input type="checkbox" name="<?php echo $combine_js; ?>" <?php checked( $combine_js_val == 'on',true); ?> /> &nbsp; <span class="wpsmy_settings"> Compress JavaScript </span>
+	<input type="checkbox" name="<?php echo $combine_js; ?>" id="<?php echo $combine_js; ?>" <?php checked( $combine_js_val == 'on',true); ?> />
+	<label for="<?php echo $combine_js; ?>" class="wpsmy_settings" style="display: inline;"> <?php _e('Compress JavaScript'); ?> </label>
 	</p>
     <p>
-    <input type="checkbox" name="<?php echo $combine_css; ?>" <?php checked( $combine_css_val == 'on',true); ?> /> &nbsp; <span class="wpsmy_settings"> Compress CSS </span>
+    <input type="checkbox" name="<?php echo $combine_css; ?>" id="<?php echo $combine_css; ?>" <?php checked( $combine_css_val == 'on',true); ?> />
+    <label for="<?php echo $combine_css; ?>" class="wpsmy_settings" style="display: inline;"> <?php _e('Compress CSS'); ?> </label>
     </p>
     <p><input type="submit" value="<?php esc_attr_e('Save Changes') ?>" class="button button-primary" name="submit" />
     </p>
@@ -112,12 +128,20 @@ function wpsmy_admin_options() {
 	</tr>
 	</table>
 	</div>
+	<hr style="margin: 2em 0 1.5em 0;" />
 	<?php
-	echo '<hr style="margin-bottom: 2em;" />';
-    echo '<table cellspacing="0" cellpadding="0" class="news_section"> <tr>';
-    echo '<td width="50%" valign="top">';
-    echo '<h1>News & Updates from Dipak C. Gajjar</h1>';
-    echo '<div class="rss-widget">';
+	// Promo - Ad contents
+	$promo_content = wp_remote_fopen("https://cdn.rawgit.com/dipakcg/wp-performance-score-booster/master/promos.html");
+    echo $promo_content;
+	?>
+	<?php // Bottom - News and Referrals part ?>
+	<hr style="margin: 1.5em 0 2em 0;" />
+    <table cellspacing="0" cellpadding="0" class="wpsmy_news_section"> <tr>
+    <td width="49%" valign="top">
+    <h2><strong>News & Updates from Dipak C. Gajjar</strong></h2>
+    <hr />
+    <div class="wpsmy_rss-widget">
+	<?php
     /* wp_widget_rss_output(array(
           'url' => 'https://dipakgajjar.com/category/news/feed/?refresh='.rand(10,100).'',  // feed URL
           'title' => 'News & Updates from Dipak C. Gajjar',
@@ -126,15 +150,24 @@ function wpsmy_admin_options() {
           'show_author' => 0,
           'show_date' => 0
      )); */
-     /* Load the news content from Dropbox url */
-    $news_content = wp_remote_fopen("https://dl.dropboxusercontent.com/u/21966579/news-and-updates.html");
+     /* Load the news content from Github */
+    $news_content = wp_remote_fopen("https://cdn.rawgit.com/dipakcg/wp-performance-score-booster/master/news-and-updates.html");
     echo $news_content;
-    echo '</div> <td width="5%"> &nbsp </td>';
-    echo '</td> <td valign="top">';
     ?>
-    <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/dipakcgajjar" data-widget-id="547661367281729536">Tweets by @dipakcgajjar</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-	<?php echo '</td> </tr> </table>';
+	</div> </td>
+	<!-- Referrals -->
+	<td width="1%"> &nbsp </td>
+	<td width="50%" valign="top">
+	<div class="wpsmy_referrals">
+		Scalable and affordable SSD VPS at DigitalOcean starting from $5 per month. <br /> <br />
+		<a href="https://www.digitalocean.com" target="_blank" onClick="this.href='https://m.do.co/c/f90a24a27dcc'" ><img src="https://dl.dropboxusercontent.com/u/21966579/do-ssd-virtual-servers-250x250.jpg" alt="Digital Ocean SSD VPS" width="250" height="250" border="0"></a>
+	</div>
+	<div class="wpsmy_referrals">
+		Great managed WordPress hosting at SiteGround starting from $3.95 per month. <br /> <br />
+		<a href="http://www.siteground.com" target="_blank" onClick="this.href='https://www.siteground.com/wordpress-hosting.htm?afbannercode=783dd6fb6802e26ada6cf20768622fda'" ><img src="https://ua.siteground.com/img/banners/general/best-pack/250x250.gif" alt="WordPress Hosting" width="250" height="250" border="0"></a>
+	</div>
+	<?php echo '</td> </tr> </table>'; ?>
+	<?php
 }
 
 // Make the default value of enable javascript and enable CSS to true on plugin activation
