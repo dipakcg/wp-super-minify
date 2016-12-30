@@ -3,9 +3,9 @@
 Plugin Name: WP Super Minify
 Plugin URI: https://github.com/dipakcg/wp-super-minify
 Description: Minifies, caches and combine inline JavaScript and CSS files to improve page load time.
-Version: 1.4
+Version: 1.5
 Author: Dipak C. Gajjar
-Author URI: http://dipakgajjar.com
+Author URI: https://dipakgajjar.com
 */
 
 // Define plugin version for future releases
@@ -13,7 +13,7 @@ if (!defined('WPSMY_PLUGIN_VERSION')) {
     define('WPSMY_PLUGIN_VERSION', 'wpsmy_plugin_version');
 }
 if (!defined('WPSMY_PLUGIN_VERSION_NUM')) {
-    define('WPSMY_PLUGIN_VERSION_NUM', '1.4');
+    define('WPSMY_PLUGIN_VERSION_NUM', '1.5');
 }
 update_option(WPSMY_PLUGIN_VERSION, WPSMY_PLUGIN_VERSION_NUM);
 
