@@ -4,7 +4,7 @@ Tags: minify, compress, combine, html, css, javascript, js, performance, load, s
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3S8BRPLWLNQ38
 Requires at least: 3.5
 Tested up to: 4.7
-Stable tag: 1.5
+Stable tag: 1.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,9 @@ Pretty much, yeah.
 1. Admin Settings
 
 == Changelog ==
+= 1.5.1, March 21, 2017 =
+* Improved Promos, News and Updates, and recommendations area.
+
 = 1.5, December 30, 2016 =
 * Updated min library to it's latest version
 
