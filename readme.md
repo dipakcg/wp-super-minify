@@ -4,7 +4,7 @@
 ![Total Downloads](https://img.shields.io/wordpress/plugin/dt/wp-super-minify.svg?maxAge=2592000)
 ![Plugin Rating](https://img.shields.io/wordpress/plugin/r/wp-super-minify.svg?maxAge=2592000)
 ![WordPress Compatibility](https://img.shields.io/wordpress/v/wp-super-minify.svg?maxAge=2592000)
-[![Build Status](https://img.shields.io/travis/dipakcg/wp-super-minify.svg?maxAge=2592000)](https://travis-ci.org/dipakcg/wp-super-minify)
+[![Build Status](https://img.shields.io/travis/dipakcg/wp-super-minify/master.svg?maxAge=2592000)](https://travis-ci.org/dipakcg/wp-super-minify)
 [![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://github.com/dipakcg/wp-super-minify/blob/master/license.txt)
 
 WP Super Minify combines, minifies, and caches inline JavaScript and CSS files on demand to speed up page loads, using [Minify PHP Framework](https://code.google.com/p/minify/).
