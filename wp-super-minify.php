@@ -181,14 +181,14 @@ function wpsmy_minify_html ($buffer) {
         return $buffer; // for loggedin users minify is not required
     } else { */
         $initial = strlen($buffer);
-        $minify_lib_path = plugin_dir_path( __FILE__ ) . 'includes/min';
+        $minify_lib_path = plugin_dir_path( __FILE__ ) . 'includes/min/lib';
 
         if (!class_exists('Minify_HTML')) {
-			require_once("$minify_lib_path/lib/Minify/HTML.php");
-			ini_set('include_path', ini_get('include_path').":$minify_lib_path/lib");
-			require_once("$minify_lib_path/lib/Minify/CSS.php");
-			require_once("$minify_lib_path/lib/JSMin.php");
-			require ("$minify_lib_path/lib/Minify/Loader.php");
+			require_once("$minify_lib_path/Minify/HTML.php");
+			ini_set('include_path', ini_get('include_path').":$minify_lib_path");
+			require_once("$minify_lib_pathMinify/CSS.php");
+			require_once("$minify_lib_path/JSMin.php");
+			require ("$minify_lib_path/Minify/Loader.php");
 			Minify_Loader::register();
 		}
 		if ( get_option('wpsmy_combine_js', 1) == 'on') {
