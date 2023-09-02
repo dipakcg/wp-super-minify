@@ -47,6 +47,7 @@ Pretty much, yeah.
 == Changelog ==
 = 1.6, September 02, 2023 =
 * Improve: Security — CSRF Check
+* Improve: Data Sanitization / Escaping
 
 = 1.5.1, March 21, 2017 =
 * Improved Promos, News and Updates, and recommendations area.
