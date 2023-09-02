@@ -3,7 +3,7 @@
 Plugin Name: WP Super Minify
 Plugin URI: https://github.com/dipakcg/wp-super-minify
 Description: Minifies, caches and combine inline JavaScript and CSS files to improve page load time.
-Version: 1.5.1
+Version: 1.6
 Author: Dipak C. Gajjar
 Author URI: https://dipakgajjar.com
 */
@@ -13,7 +13,7 @@ if (!defined('WPSMY_PLUGIN_VERSION')) {
     define('WPSMY_PLUGIN_VERSION', 'wpsmy_plugin_version');
 }
 if (!defined('WPSMY_PLUGIN_VERSION_NUM')) {
-    define('WPSMY_PLUGIN_VERSION_NUM', '1.5.1');
+    define('WPSMY_PLUGIN_VERSION_NUM', '1.6');
 }
 update_option(WPSMY_PLUGIN_VERSION, WPSMY_PLUGIN_VERSION_NUM);
 
@@ -81,23 +81,27 @@ function wpsmy_admin_options() {
     $combine_css_val = get_option($combine_css);
 
 	// See if the user has posted us some information
-    // If they did, this hidden field will be set to 'Y'
-    if( isset($_POST[$hidden_field_name]) && $_POST[$hidden_field_name] == 'Y' ) {
-        // Read their posted value
-        $combine_js_val = (isset($_POST[$combine_js]) ? $_POST[$combine_js] : "");
-        $combine_css_val = (isset($_POST[$combine_css]) ? $_POST[$combine_css] : "");
+	// If they did, this hidden field will be set to 'Y'
+	if( isset( $_POST[$hidden_field_name] ) && $_POST[$hidden_field_name] == 'Y' ) {
+		// CSRF Check
+    	if ( isset( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( $_REQUEST['_wpnonce'], 'wpsmy_settings_nonce' ) ) {
+			// Read their posted value
+			$combine_js_val = ( isset( $_POST[$combine_js] ) ? sanitize_text_field( $_POST[$combine_js] ) : "" );
+			$combine_css_val = ( isset( $_POST[$combine_css] ) ? sanitize_text_field( $_POST[$combine_css] ) : "" );
 
-        // Save the posted value in the database
-        update_option( $combine_js, $combine_js_val );
-        update_option( $combine_css, $combine_css_val );
+			// Save the posted value in the database
+			update_option( $combine_js, $combine_js_val );
+			update_option( $combine_css, $combine_css_val );
 
-        // Put an settings updated message on the screen
-   	?>
-   	<div class="updated"><p><strong>Settings Saved.</strong></p></div>
+			// Put an settings updated message on the screen
+		?>
+		<div class="updated"><p><strong>Settings Saved.</strong></p></div>
 	<?php
+		}
 	}
 	?>
 	<form method="post" name="options_form">
+	<?php wp_nonce_field( 'wpsmy_settings_nonce' ); ?>
 	<input type="hidden" name="<?php echo $hidden_field_name; ?>" value="Y">
 	<p>
 	<input type="checkbox" name="<?php echo $combine_js; ?>" id="<?php echo $combine_js; ?>" <?php checked( $combine_js_val == 'on',true); ?> />

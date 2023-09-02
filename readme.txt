@@ -4,7 +4,7 @@ Tags: minify, compress, combine, html, css, javascript, js, performance, load, s
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3S8BRPLWLNQ38
 Requires at least: 3.5
 Tested up to: 6.2
-Stable tag: 1.5.1
+Stable tag: 1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,9 @@ Pretty much, yeah.
 1. Admin Settings
 
 == Changelog ==
+= 1.6, September 02, 2023 =
+* Improve: Security — CSRF Check
+
 = 1.5.1, March 21, 2017 =
 * Improved Promos, News and Updates, and recommendations area.
 
