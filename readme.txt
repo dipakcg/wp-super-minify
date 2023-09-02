@@ -48,6 +48,7 @@ Pretty much, yeah.
 = 1.6, September 02, 2023 =
 * Improve: Security — CSRF Check
 * Improve: Data Sanitization / Escaping
+* Improve: Removed Promos, News and Updates, and recommendations area completely to make options page more clean
 
 = 1.5.1, March 21, 2017 =
 * Improved Promos, News and Updates, and recommendations area.

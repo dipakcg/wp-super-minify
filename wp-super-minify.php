@@ -132,34 +132,6 @@ function wpsmy_admin_options() {
 	</tr>
 	</table>
 	</div>
-	<hr style="margin: 2em 0 1.5em 0;" />
-	<?php
-	// Promo - Ad contents
-	$promo_content = wp_remote_fopen("https://dipakgajjar.com/public/promos.html");
-    echo $promo_content;
-	?>
-	<?php // Bottom - News and Referrals part ?>
-	<hr style="margin: 1.5em 0 2em 0;" />
-    <table cellspacing="0" cellpadding="0" class="wpsmy_news_section"> <tr>
-    <td width="49%" valign="top">
-    <h2><strong>News & Updates from Dipak C. Gajjar</strong></h2>
-    <hr />
-    <div class="wpsmy_rss-widget">
-	<?php
-     /* Load the news content */
-    $news_content = wp_remote_fopen("https://dipakgajjar.com/public/news-and-updates.html");
-    echo $news_content;
-    ?>
-	</div> </td>
-	<!-- Referrals -->
-	<td width="1%"> &nbsp </td>
-	<td width="51%" valign="top">
-	<?php
-     /* Load the referrals content from Github url */
-    $referrals_content = wp_remote_fopen("https://dipakgajjar.com/public/recommendations.html");
-    echo $referrals_content;
-    ?>
-	</td> </tr> </table>
 	<?php
 }
 
