@@ -4,7 +4,6 @@
 ![Total Downloads](https://img.shields.io/wordpress/plugin/dt/wp-super-minify.svg?maxAge=2592000)
 ![Plugin Rating](https://img.shields.io/wordpress/plugin/r/wp-super-minify.svg?maxAge=2592000)
 ![WordPress Compatibility](https://img.shields.io/wordpress/v/wp-super-minify.svg?maxAge=2592000)
-[![Build Status](https://img.shields.io/travis/dipakcg/wp-super-minify/master.svg?maxAge=2592000)](https://travis-ci.org/dipakcg/wp-super-minify)
 [![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://github.com/dipakcg/wp-super-minify/blob/master/license.txt)
 
 **WP Super Minify** automatically minifies, compresses, and caches HTML, CSS & JavaScript files (inline and individual) to enhance website’s load speed.
