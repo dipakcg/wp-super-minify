@@ -6,7 +6,7 @@
 ![WordPress Compatibility](https://img.shields.io/wordpress/v/wp-super-minify.svg?maxAge=2592000)
 [![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://github.com/dipakcg/wp-super-minify/blob/master/license.txt)
 
-**WP Super Minify** automatically minifies, compresses, and caches HTML, CSS & JavaScript files (inline and individual) to enhance website’s load speed.
+**WP Super Minify** is a lightweight plugin that automatically minifies, compresses, and caches HTML, CSS, and JavaScript on demand to improve your website’s load speed.
 
 Once activated, the plugin seamlessly compresses HTML, inline CSS, and JavaScript, reducing file sizes for faster page loading. This optimisation helps improve your site's Google PageSpeed Insights and GTmetrix performance scores.
 

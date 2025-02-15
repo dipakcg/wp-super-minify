@@ -1,4 +1,4 @@
-=== WP Super Minify • Minify, Compress and Cache HTML, CSS & JavaScript files ===
+=== WP Super Minify • Minify, Compress and Cache HTML, CSS & JavaScript ===
 Contributors: dipakcg
 Tags: minify, compress, html, css, javascript, js, performance, load, psi, pagespeed insights
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3S8BRPLWLNQ38
@@ -8,10 +8,10 @@ Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Smartly minify, compress and cache HTML, CSS & JavaScript files to boost website speed.
+A lightweight plugin that automatically minifies, compresses, and caches HTML, CSS, and JavaScript on demand to improve your website’s load speed.
 
 == Description ==
-**WP Super Minify** automatically minifies, compresses, and caches HTML, CSS & JavaScript files (inline and individual) to enhance website’s load speed.
+**WP Super Minify** automatically minifies, compresses, and caches HTML, CSS & JavaScript files (inline and individual) on demand to enhance website’s load speed.
 
 Once activated, the plugin seamlessly compresses HTML, inline CSS, and JavaScript, reducing file sizes for faster page loading. This optimisation helps improve your site's Google PageSpeed Insights and GTmetrix performance scores.
 
