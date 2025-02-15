@@ -1,19 +1,23 @@
-=== WP Super Minify ===
+=== WP Super Minify • Minify, Compress and Cache HTML, CSS & JavaScript files ===
 Contributors: dipakcg
-Tags: minify, compress, combine, html, css, javascript, js, performance, load, speed, time, yslow, pagespeed
+Tags: minify, compress, html, css, javascript, js, performance, load, psi, pagespeed insights
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3S8BRPLWLNQ38
 Requires at least: 3.5
-Tested up to: 6.6
-Stable tag: 1.6
+Tested up to: 6.7.2
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A very light weight plugin, combines, minifies, and caches inline JavaScript and CSS files on demand to speed up page loads.
+Smartly minify, compress and cache HTML, CSS & JavaScript files to boost website speed.
 
 == Description ==
-This plugin combines, minifies, and caches inline JavaScript and CSS files on demand to speed up page loads, using [Minify PHP Framework](https://code.google.com/p/minify/).
+**WP Super Minify** automatically minifies, compresses, and caches HTML, CSS & JavaScript files (inline and individual) to enhance website’s load speed.
 
-By activating this plugin, you will see the source of your HTML, inline JavaScript and CSS are now compressed. The size will be smaller and quite helpful to improve your page load speed as well as google page speed and yslow grade (if you care).
+Once activated, the plugin seamlessly compresses HTML, inline CSS, and JavaScript, reducing file sizes for faster page loading. This optimisation helps improve your site's Google PageSpeed Insights and GTmetrix performance scores.
+
+Additionally, **WP Super Minify** minifies individual JavaScript and CSS files, ensuring they load correctly and are automatically updated whenever the original files are modified or added — no manual settings needed!
+
+Optimise your website effortlessly and deliver a faster, smoother experience to your visitors.
 
 To check whether this plugin works properly, simply view your site source or press Ctrl + U from your keyboard. In the end of the source, you should see message something like:
 
@@ -23,28 +27,53 @@ To check whether this plugin works properly, simply view your site source or pre
 
 **P.S. It is always the best policy to open a [support thread](http://wordpress.org/support/plugin/wp-super-minify) first before posting any negative review.**
 
+Huge appreciation to [Steve Clay](https://github.com/mrclay/minify) and [Matthias Mullie](https://github.com/matthiasmullie/minify) for their contributions to the Minify libraries. While these libraries are no longer actively maintained, their work has been invaluable, and I sincerely thank them.
+
 == Installation ==
-1. Upload the `wp-super-minify` folder to the `/wp-content/plugins/` directory
-2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. That's it!
+= Automatic Installation (Recommended) =
+1. Go to your WordPress Dashboard → Plugins → Add New.
+2. Search for `WP Super Minify`.
+3. Click Install Now, then Activate the plugin.
+4. The plugin is now ready to use!
+
+= Manual Installation (Upload via WordPress Dashboard) =
+1. Download the latest version of the plugin (.zip file).
+2. In your WordPress Dashboard, go to Plugins → Add New → Upload Plugin.
+3. Click Choose File, select the downloaded .zip file, and click Install Now.
+4. Once installed, click Activate Plugin.
+
+= Manual Installation (FTP/SFTP Method) =
+1. Download and extract the plugin .zip file.
+2. Connect to your server via FTP/SFTP.
+3. Upload the extracted folder to /wp-content/plugins/.
+4. In your WordPress Dashboard, go to Plugins and activate `WP Super Minify`.
+
 
 == Frequently Asked Questions ==
 = What does this plugin do? =
+This plugin automatically minifies, compresses, and caches HTML, CSS & JavaScript files (inline and individual) to enhance website’s load speed.
 
-This plugin combines, minifies, and caches inline JavaScript and CSS files on demand to speed up page loads.
+= Do I need to do anything when I modify an original CSS or JS file? =
+No — you don’t need to do anything. This plugin automatically updates the minified and compressed version of the file whenever the original is modified.
 
 = Any specific requirements for this plugin to work? =
-
 No.
-
-= Is that it? =
-
-Pretty much, yeah.
 
 == Screenshots ==
 1. Admin Settings
+2. Serves minified CSS & JS files instead of the original during page load
+3. Reduced HTML source size after compression
+4. Performance impact of minified CSS & JS
+4. Google PageSpeed Insights Performance Results
 
 == Changelog ==
+= 2.0, February 16, 2025 =
+* Fully rebuilt with a new, optimized codebase.
+* Improved performance, efficiency, and compatibility.
+* Enhanced minification, compression, and caching logic.
+* Automatic updates for minified files when originals change.
+* Bug fixes and stability improvements.
+
 = 1.6, September 02, 2023 =
 * Improve: Security — CSRF Check
 * Improve: Data Sanitization / Escaping

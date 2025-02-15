@@ -4,12 +4,11 @@
  * @package Minify
  */
 
-
 /**
  * ZendPlatform-based cache class for Minify
  *
  * Based on Minify_Cache_APC, uses output_cache_get/put (currently deprecated)
- * 
+ *
  * <code>
  * Minify::setCache(new Minify_Cache_ZendPlatform());
  * </code>
@@ -17,8 +16,8 @@
  * @package Minify
  * @author Patrick van Dissel
  */
-class Minify_Cache_ZendPlatform {
-
+class Minify_Cache_ZendPlatform implements Minify_CacheInterface
+{
 
     /**
      * Create a Minify_Cache_ZendPlatform object, to be passed to
@@ -27,13 +26,11 @@ class Minify_Cache_ZendPlatform {
      * @param int $expire seconds until expiration (default = 0
      * meaning the item will not get an expiration date)
      *
-     * @return null
      */
     public function __construct($expire = 0)
     {
         $this->_exp = $expire;
     }
-
 
     /**
      * Write data to cache.
@@ -49,7 +46,6 @@ class Minify_Cache_ZendPlatform {
         return output_cache_put($id, "{$_SERVER['REQUEST_TIME']}|{$data}");
     }
 
-
     /**
      * Get the size of a cache entry
      *
@@ -59,11 +55,8 @@ class Minify_Cache_ZendPlatform {
      */
     public function getSize($id)
     {
-        return $this->_fetch($id)
-            ? strlen($this->_data)
-            : false;
+        return $this->_fetch($id) ? strlen($this->_data) : false;
     }
-
 
     /**
      * Does a valid cache entry exist?
@@ -76,10 +69,8 @@ class Minify_Cache_ZendPlatform {
      */
     public function isValid($id, $srcMtime)
     {
-        $ret = ($this->_fetch($id) && ($this->_lm >= $srcMtime));
-        return $ret;
+        return ($this->_fetch($id) && ($this->_lm >= $srcMtime));
     }
-
 
     /**
      * Send the cached content to output
@@ -88,11 +79,8 @@ class Minify_Cache_ZendPlatform {
      */
     public function display($id)
     {
-        echo $this->_fetch($id)
-            ? $this->_data
-            : '';
+        echo $this->_fetch($id) ? $this->_data : '';
     }
-
 
     /**
      * Fetch the cached content
@@ -103,20 +91,15 @@ class Minify_Cache_ZendPlatform {
      */
     public function fetch($id)
     {
-        return $this->_fetch($id)
-            ? $this->_data
-            : '';
+        return $this->_fetch($id) ? $this->_data : '';
     }
 
-
     private $_exp = null;
-
 
     // cache of most recently fetched id
     private $_lm = null;
     private $_data = null;
     private $_id = null;
-
 
     /**
      * Fetch data and timestamp from ZendPlatform, store in instance
@@ -130,13 +113,17 @@ class Minify_Cache_ZendPlatform {
         if ($this->_id === $id) {
             return true;
         }
+
         $ret = output_cache_get($id, $this->_exp);
         if (false === $ret) {
             $this->_id = null;
+
             return false;
         }
+
         list($this->_lm, $this->_data) = explode('|', $ret, 2);
         $this->_id = $id;
+
         return true;
     }
 }

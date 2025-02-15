@@ -7,13 +7,17 @@
 [![Build Status](https://img.shields.io/travis/dipakcg/wp-super-minify/master.svg?maxAge=2592000)](https://travis-ci.org/dipakcg/wp-super-minify)
 [![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://github.com/dipakcg/wp-super-minify/blob/master/license.txt)
 
-WP Super Minify combines, minifies, and caches inline JavaScript and CSS files on demand to speed up page loads, using [Minify PHP Framework](https://code.google.com/p/minify/).
+**WP Super Minify** automatically minifies, compresses, and caches HTML, CSS & JavaScript files (inline and individual) to enhance website’s load speed.
 
-By activating this plugin, you will see the source of your HTML, inline JavaScript and CSS are now compressed. The size will be smaller and quite helpful to improve your page load speed as well as google page speed and yslow grade (if you care).
+Once activated, the plugin seamlessly compresses HTML, inline CSS, and JavaScript, reducing file sizes for faster page loading. This optimisation helps improve your site's Google PageSpeed Insights and GTmetrix performance scores.
+
+Additionally, **WP Super Minify** minifies individual JavaScript and CSS files, ensuring they load correctly and are automatically updated whenever the original files are modified or added — no manual settings needed!
+
+Optimise your website effortlessly and deliver a faster, smoother experience to your visitors.
 
 To check whether this plugin works properly, simply view your site source or press Ctrl + U from your keyboard. In the end of the source, you should see message something like:
 
-`*** Total size saved: 11.341% | Size before compression: 27104 bytes | Size after compression: 24030 bytes. ***`
+*** Total size saved: 11.341% | Size before compression: 27104 bytes | Size after compression: 24030 bytes. ***
 
 ## Installation
 * Download the stable version of plugin from wordpress.org repo or developer version from GitHub.

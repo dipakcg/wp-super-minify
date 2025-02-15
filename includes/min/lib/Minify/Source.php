@@ -1,187 +1,219 @@
 <?php
 /**
- * Class Minify_Source  
+ * Class Minify_Source
  * @package Minify
  */
 
-/** 
- * A content source to be minified by Minify. 
- * 
+/**
+ * A content source to be minified by Minify.
+ *
  * This allows per-source minification options and the mixing of files with
  * content from other sources.
- * 
+ *
  * @package Minify
  * @author Stephen Clay <steve@mrclay.org>
  */
-class Minify_Source {
+class Minify_Source implements Minify_SourceInterface
+{
 
     /**
      * @var int time of last modification
      */
-    public $lastModified = null;
-    
+    protected $lastModified;
+
     /**
      * @var callback minifier function specifically for this source.
      */
-    public $minifier = null;
-    
+    protected $minifier;
+
     /**
      * @var array minification options specific to this source.
      */
-    public $minifyOptions = null;
+    protected $minifyOptions = array();
 
     /**
      * @var string full path of file
      */
-    public $filepath = null;
-    
+    protected $filepath;
+
     /**
      * @var string HTTP Content Type (Minify requires one of the constants Minify::TYPE_*)
      */
-    public $contentType = null;
-    
+    protected $contentType;
+
+    /**
+     * @var string
+     */
+    protected $content;
+
+    /**
+     * @var callable
+     */
+    protected $getContentFunc;
+
+    /**
+     * @var string
+     */
+    protected $id;
+
     /**
      * Create a Minify_Source
-     * 
+     *
      * In the $spec array(), you can either provide a 'filepath' to an existing
-     * file (existence will not be checked!) or give 'id' (unique string for 
-     * the content), 'content' (the string content) and 'lastModified' 
+     * file (existence will not be checked!) or give 'id' (unique string for
+     * the content), 'content' (the string content) and 'lastModified'
      * (unixtime of last update).
-     * 
-     * As a shortcut, the controller will replace "//" at the beginning
-     * of a filepath with $_SERVER['DOCUMENT_ROOT'] . '/'.
      *
      * @param array $spec options
      */
     public function __construct($spec)
     {
         if (isset($spec['filepath'])) {
-            if (0 === strpos($spec['filepath'], '//')) {
-                $spec['filepath'] = $_SERVER['DOCUMENT_ROOT'] . substr($spec['filepath'], 1);
-            }
-            $segments = explode('.', $spec['filepath']);
-            $ext = strtolower(array_pop($segments));
+            $ext = pathinfo($spec['filepath'], PATHINFO_EXTENSION);
             switch ($ext) {
-            case 'js'   : $this->contentType = 'application/x-javascript';
-                          break;
-            case 'css'  : $this->contentType = 'text/css';
-                          break;
-            case 'htm'  : // fallthrough
-            case 'html' : $this->contentType = 'text/html';
-                          break;
+                case 'js': $this->contentType = Minify::TYPE_JS;
+                    break;
+                case 'less': // fallthrough
+                case 'scss': // fallthrough
+                case 'css': $this->contentType = Minify::TYPE_CSS;
+                    break;
+                case 'htm': // fallthrough
+                case 'html': $this->contentType = Minify::TYPE_HTML;
+                    break;
             }
             $this->filepath = $spec['filepath'];
-            $this->_id = $spec['filepath'];
-            $this->lastModified = filemtime($spec['filepath'])
+            $this->id = $spec['filepath'];
+
+            // TODO ideally not touch disk in constructor
+            $this->lastModified = filemtime($spec['filepath']);
+
+            if (!empty($spec['uploaderHoursBehind'])) {
                 // offset for Windows uploaders with out of sync clocks
-                + round(Minify::$uploaderHoursBehind * 3600);
-        } elseif (isset($spec['id'])) {
-            $this->_id = 'id::' . $spec['id'];
-            if (isset($spec['content'])) {
-                $this->_content = $spec['content'];
-            } else {
-                $this->_getContentFunc = $spec['getContentFunc'];
+                $this->lastModified += round($spec['uploaderHoursBehind'] * 3600);
             }
-            $this->lastModified = isset($spec['lastModified'])
-                ? $spec['lastModified']
-                : time();
+        } elseif (isset($spec['id'])) {
+            $this->id = 'id::' . $spec['id'];
+            if (isset($spec['content'])) {
+                $this->content = $spec['content'];
+            } else {
+                $this->getContentFunc = $spec['getContentFunc'];
+            }
+            $this->lastModified = isset($spec['lastModified']) ? $spec['lastModified'] : time();
         }
         if (isset($spec['contentType'])) {
             $this->contentType = $spec['contentType'];
         }
         if (isset($spec['minifier'])) {
-            $this->minifier = $spec['minifier'];
+            $this->setMinifier($spec['minifier']);
         }
         if (isset($spec['minifyOptions'])) {
             $this->minifyOptions = $spec['minifyOptions'];
         }
     }
-    
+
     /**
-     * Get content
-     *
-     * @return string
+     * {@inheritdoc}
+     */
+    public function getLastModified()
+    {
+        return $this->lastModified;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMinifier()
+    {
+        return $this->minifier;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setMinifier($minifier = null)
+    {
+        if ($minifier === '') {
+            error_log(__METHOD__ . " cannot accept empty string. Use 'Minify::nullMinifier' or 'trim'.");
+            $minifier = 'Minify::nullMinifier';
+        }
+        if ($minifier !== null && !is_callable($minifier, true)) {
+            throw new InvalidArgumentException('minifier must be null or a valid callable');
+        }
+        $this->minifier = $minifier;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMinifierOptions()
+    {
+        return $this->minifyOptions;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setMinifierOptions(array $options)
+    {
+        $this->minifyOptions = $options;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getContentType()
+    {
+        return $this->contentType;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function getContent()
     {
-        $content = (null !== $this->filepath)
-            ? file_get_contents($this->filepath)
-            : ((null !== $this->_content)
-                ? $this->_content
-                : call_user_func($this->_getContentFunc, $this->_id)
-            );
+        if (null === $this->filepath) {
+            if (null === $this->content) {
+                $content = call_user_func($this->getContentFunc, $this->id);
+            } else {
+                $content = $this->content;
+            }
+        } else {
+            $content = file_get_contents($this->filepath);
+        }
+
         // remove UTF-8 BOM if present
-        return (pack("CCC",0xef,0xbb,0xbf) === substr($content, 0, 3))
-            ? substr($content, 3)
-            : $content;
+        if (strpos($content, "\xEF\xBB\xBF") === 0) {
+            return substr($content, 3);
+        }
+
+        return $content;
     }
-    
+
     /**
-     * Get id
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getId()
     {
-        return $this->_id;
+        return $this->id;
     }
-    
-    /**
-     * Verifies a single minification call can handle all sources
-     *
-     * @param array $sources Minify_Source instances
-     * 
-     * @return bool true iff there no sources with specific minifier preferences.
-     */
-    public static function haveNoMinifyPrefs($sources)
-    {
-        foreach ($sources as $source) {
-            if (null !== $source->minifier
-                || null !== $source->minifyOptions) {
-                return false;
-            }
-        }
-        return true;
-    }
-    
-    /**
-     * Get unique string for a set of sources
-     *
-     * @param array $sources Minify_Source instances
-     * 
-     * @return string
-     */
-    public static function getDigest($sources)
-    {
-        foreach ($sources as $source) {
-            $info[] = array(
-                $source->_id, $source->minifier, $source->minifyOptions
-            );
-        }
-        return md5(serialize($info));
-    }
-    
-    /**
-     * Get content type from a group of sources
-     * 
-     * This is called if the user doesn't pass in a 'contentType' options  
-     * 
-     * @param array $sources Minify_Source instances
-     * 
-     * @return string content type. e.g. 'text/css'
-     */
-    public static function getContentType($sources)
-    {
-        foreach ($sources as $source) {
-            if ($source->contentType !== null) {
-                return $source->contentType;
-            }
-        }
-        return 'text/plain';
-    }
-    
-    protected $_content = null;
-    protected $_getContentFunc = null;
-    protected $_id = null;
-}
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getFilePath()
+    {
+        return $this->filepath;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setupUriRewrites()
+    {
+        if ($this->filepath
+            && !isset($this->minifyOptions['currentDir'])
+            && !isset($this->minifyOptions['prependRelativePath'])) {
+            $this->minifyOptions['currentDir'] = dirname($this->filepath);
+        }
+    }
+}

@@ -13,7 +13,8 @@
  *
  * @todo can use a stream wrapper to unit test this?
  */
-class Minify_JS_ClosureCompiler {
+class Minify_JS_ClosureCompiler
+{
 
     /**
      * @var string The option key for the maximum POST byte size
@@ -53,7 +54,7 @@ class Minify_JS_ClosureCompiler {
     /**
      * @var string $url URL of compiler server. defaults to Google's
      */
-    protected $serviceUrl = 'http://closure-compiler.appspot.com/compile';
+    protected $serviceUrl = 'https://closure-compiler.appspot.com/compile';
 
     /**
      * @var int $maxBytes The maximum JS size that can be sent to the compiler server in bytes
@@ -68,7 +69,7 @@ class Minify_JS_ClosureCompiler {
     /**
      * @var callable Function to minify JS if service fails. Default is JSMin
      */
-    protected $fallbackMinifier = array('JSMin', 'minify');
+    protected $fallbackMinifier = array('JSMin\\JSMin', 'minify');
 
     /**
      * Minify JavaScript code via HTTP request to a Closure Compiler API
@@ -81,6 +82,7 @@ class Minify_JS_ClosureCompiler {
     public static function minify($js, array $options = array())
     {
         $obj = new self($options);
+
         return $obj->min($js);
     }
 
@@ -172,6 +174,9 @@ class Minify_JS_ClosureCompiler {
             $contents = file_get_contents($this->serviceUrl, false, stream_context_create(array(
                 'http' => array(
                     'method' => 'POST',
+                    'compilation_level' => 'SIMPLE',
+                    'output_format' => 'text',
+                    'output_info' => 'compiled_code',
                     'header' => "Content-type: application/x-www-form-urlencoded\r\nConnection: close\r\n",
                     'content' => $postBody,
                     'max_redirects' => 0,
@@ -190,13 +195,13 @@ class Minify_JS_ClosureCompiler {
             curl_close($ch);
         } else {
             throw new Minify_JS_ClosureCompiler_Exception(
-               "Could not make HTTP request: allow_url_open is false and cURL not available"
+                "Could not make HTTP request: allow_url_open is false and cURL not available"
             );
         }
 
         if (false === $contents) {
             throw new Minify_JS_ClosureCompiler_Exception(
-               "No HTTP response from server"
+                "No HTTP response from server"
             );
         }
 
@@ -227,4 +232,6 @@ class Minify_JS_ClosureCompiler {
     }
 }
 
-class Minify_JS_ClosureCompiler_Exception extends Exception {}
+class Minify_JS_ClosureCompiler_Exception extends Exception
+{
+}
