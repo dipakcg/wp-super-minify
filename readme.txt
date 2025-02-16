@@ -11,7 +11,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 A lightweight plugin that automatically minifies, compresses, and caches HTML, CSS, and JavaScript on demand to improve your website’s load speed.
 
 == Description ==
-**WP Super Minify** automatically minifies, compresses, and caches HTML, CSS & JavaScript files (inline and individual) on demand to enhance website’s load speed.
+**WP Super Minify automatically minifies, compresses, and caches HTML, CSS & JavaScript files (inline and individual) on demand to enhance website’s load speed.**
 
 Once activated, the plugin seamlessly compresses HTML, inline CSS, and JavaScript, reducing file sizes for faster page loading. This optimisation helps improve your site's Google PageSpeed Insights and GTmetrix performance scores.
 
@@ -27,8 +27,7 @@ To check whether this plugin works properly, simply view your site source or pre
 
 **P.S. It is always the best policy to open a [support thread](http://wordpress.org/support/plugin/wp-super-minify) first before posting any negative review.**
 
-**Like this plugin? Try my other plugin!**
-**[WP Performance Score Booster](https://wordpress.org/plugins/wp-performance-score-booster/)**
+**Like this plugin? You'll love my other plugin: [WP Performance Score Booster](https://wordpress.org/plugins/wp-performance-score-booster/)**
 
 Huge appreciation to [Steve Clay](https://github.com/mrclay/minify) and [Matthias Mullie](https://github.com/matthiasmullie/minify) for their contributions to the Minify libraries. While these libraries are no longer actively maintained, their work has been invaluable, and I sincerely thank them.
 
