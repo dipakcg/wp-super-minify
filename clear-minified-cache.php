@@ -11,7 +11,7 @@ function wpsmy_clear_minified_cache() {
 	
 	if ( $deleted > 0 ) {
 		update_option( 'wpsmy_minified_files', [] ); // Clear saved minified files list
-		echo '<div class="notice notice-success"><p>' . $deleted / 2 . ' minified CSS & JS files have been successfully purged from the cache.</p></div>';
+		echo '<div class="notice notice-success"><p>' . $deleted / 2 . ' minified files have been deleted successfully.</p></div>';
 	}
 	else {
 		echo '<div class="notice notice-success"><p>There is no minified CSS & JS file cache found.</p></div>';

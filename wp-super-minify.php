@@ -150,16 +150,31 @@ function wpsmy_admin_options() {
     </p>
 	</form>
 	<p> &nbsp; </p>
-	<p style="color:#00a32a; font-weight: bold;">
 	<?php
-	if ($combine_js_val == 'on' && $combine_css_val != 'on') echo "✅ WP Super Minify now minifies, compresses and caches all JavaScript files. 
-		Enable '<em>Optimise CSS</em>' option to further boost your site’s performance.";
-	else if ($combine_css_val == 'on' && $combine_js_val != 'on') echo "✅ WP Super Minify now minifies, compresses and caches all CSS files. 
-		Enable '<em>Optimise JavaScript</em>' option to further boost your site’s performance..";
-	else if ($combine_js_val == 'on' && $combine_css_val == 'on') echo "✅ WP Super Minify now minifies, compresses and caches all CSS & JavaScript files — making your site lighter, faster, and more optimised than ever! 🚀";
-	else echo "<span style='color: RED !important;'>❌ You haven’t selected any options above — WP Super Minify isn’t currently optimising your site. <br /> <br /> If 		you’re not debugging or troubleshooting errors, consider enabling the options above to boost your site's performance. </span>";
+	$message = "";
+	$css_enabled = ($combine_css_val == 'on');
+	$js_enabled = ($combine_js_val == 'on');
+	
+	$templates = [
+		'css_js'	=>	"✅ WP Super Minify now minifies, compresses, and caches all %s files. Enable '<em>Optimise %s</em>' to further boost your site's performance.",
+		'both'		=>	"✅ WP Super Minify now minifies, compresses, and caches all CSS & JavaScript files — making your site lighter, faster, and more optimised than ever! 🚀",
+		'none'		=>	"<span style='color: RED !important;'>❗ You haven’t selected any options above — WP Super Minify isn’t currently optimising your site.
+						<br /> <br />If you’re not debugging or troubleshooting errors, consider enabling the options above to boost your site's performance.</span>",
+	];
+	$hassle_free_updates = "✅ Enjoy a seamless experience — Minified files are automatically updated whenever the original files are modified.";
+	
+	if ( $js_enabled && !$css_enabled ) {
+		$message = sprintf($templates['css_js'], "JavaScript", "CSS") . '<br /> <br />' . $hassle_free_updates;
+	} elseif ( $css_enabled && !$js_enabled ) {
+		$message = sprintf($templates['css_js'], "CSS", "JS") . '<br /> <br />' . $hassle_free_updates;
+	} elseif ( $js_enabled && $css_enabled ) {
+		$message = $templates['both'] . '<br /> <br />' . $hassle_free_updates;
+	} else {
+		$message = $templates['none'];
+	}
+	// Output the final message
+	echo '<p style="color:#00a32a; font-weight: bold;">' . $message . '</p>';
 	?>
-	</p>
 	</td>
 	<td style="text-align: left;">
 	<div class="wpsmy_admin_dev_sidebar_div">
