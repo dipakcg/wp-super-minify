@@ -27,8 +27,8 @@ To check whether this plugin works properly, simply view your site source or pre
 
 **P.S. It is always the best policy to open a [support thread](http://wordpress.org/support/plugin/wp-super-minify) first before posting any negative review.**
 
-## Like this plugin? Try my other plugin!
-[WP Performance Score Booster](https://wordpress.org/plugins/wp-performance-score-booster/)
+**Like this plugin? Try my other plugin!**
+**[WP Performance Score Booster](https://wordpress.org/plugins/wp-performance-score-booster/)**
 
 Huge appreciation to [Steve Clay](https://github.com/mrclay/minify) and [Matthias Mullie](https://github.com/matthiasmullie/minify) for their contributions to the Minify libraries. While these libraries are no longer actively maintained, their work has been invaluable, and I sincerely thank them.
 
