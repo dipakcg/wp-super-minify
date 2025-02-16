@@ -23,17 +23,18 @@ To check whether this plugin works properly, simply view your site source or pre
 
 *** Total size saved: 11.341% | Size before compression: 27104 bytes | Size after compression: 24030 bytes. ***
 
-## Development & Support
-
-**Follow the development of this plugin on [GitHub](https://github.com/dipakcg/wp-super-minify)**
-
-**P.S. It is always the best policy to open a [support thread](http://wordpress.org/support/plugin/wp-super-minify) first before posting any negative review.**
-
 **Like this plugin? You'll love my other plugin: [WP Performance Score Booster](https://wordpress.org/plugins/wp-performance-score-booster/)**
+
+#### Development & Support
+
+Follow the development of this plugin on [GitHub](https://github.com/dipakcg/wp-super-minify).
+
+P.S. It is always the best policy to open a [support thread](http://wordpress.org/support/plugin/wp-super-minify) first before posting any negative review.
 
 #### Credits
 
-Huge appreciation to [Steve Clay](https://github.com/mrclay/minify) and [Matthias Mullie](https://github.com/matthiasmullie/minify) for sharing their Minify libraries on GitHub. While these libraries are no longer actively maintained, their work has been invaluable, and I sincerely thank them.
+A big shoutout to [Steve Clay](https://github.com/mrclay/minify) and [Matthias Mullie](https://github.com/matthiasmullie/minify) for sharing their Minify libraries on GitHub. While these libraries are no longer actively maintained, their work has been invaluable, and I sincerely thank them.
+
 
 == Installation ==
 = Automatic Installation (Recommended) =
