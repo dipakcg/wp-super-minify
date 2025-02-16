@@ -15,7 +15,7 @@ A lightweight plugin that automatically minifies, compresses, and caches HTML, C
 
 Once activated, the plugin seamlessly compresses HTML, inline CSS, and JavaScript, reducing file sizes for faster page loading. This optimisation helps improve your site's Google PageSpeed Insights and GTmetrix performance scores.
 
-Additionally, **WP Super Minify** minifies individual JavaScript and CSS files, ensuring they load correctly and are automatically updated whenever the original files are modified or added — no manual settings needed!
+Additionally, WP Super Minify minifies individual JavaScript and CSS files, ensuring they load correctly and are automatically updated whenever the original files are modified or added — no manual settings needed!
 
 Optimise your website effortlessly and deliver a faster, smoother experience to your visitors.
 
@@ -23,13 +23,17 @@ To check whether this plugin works properly, simply view your site source or pre
 
 *** Total size saved: 11.341% | Size before compression: 27104 bytes | Size after compression: 24030 bytes. ***
 
+## Development & Support
+
 **Follow the development of this plugin on [GitHub](https://github.com/dipakcg/wp-super-minify)**
 
 **P.S. It is always the best policy to open a [support thread](http://wordpress.org/support/plugin/wp-super-minify) first before posting any negative review.**
 
 **Like this plugin? You'll love my other plugin: [WP Performance Score Booster](https://wordpress.org/plugins/wp-performance-score-booster/)**
 
-Huge appreciation to [Steve Clay](https://github.com/mrclay/minify) and [Matthias Mullie](https://github.com/matthiasmullie/minify) for their contributions to the Minify libraries. While these libraries are no longer actively maintained, their work has been invaluable, and I sincerely thank them.
+#### Credits
+
+Huge appreciation to [Steve Clay](https://github.com/mrclay/minify) and [Matthias Mullie](https://github.com/matthiasmullie/minify) for sharing their Minify libraries on GitHub. While these libraries are no longer actively maintained, their work has been invaluable, and I sincerely thank them.
 
 == Installation ==
 = Automatic Installation (Recommended) =
