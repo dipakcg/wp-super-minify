@@ -67,7 +67,7 @@ No.
 2. Serves minified CSS & JS files instead of the original during page load
 3. Reduced HTML source size after compression
 4. Performance impact of minified CSS & JS
-4. Google PageSpeed Insights Performance Results
+5. Google PageSpeed Insights Performance Results
 
 == Changelog ==
 = 2.0, February 16, 2025 =
