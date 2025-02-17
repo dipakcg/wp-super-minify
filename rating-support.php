@@ -45,7 +45,7 @@ function wpsmy_submit_review_notice() {
 
 		$notice_contents = '<p> Thank you for using <strong>WP Super Minify</strong>. </p>';
 		$notice_contents .= '<p> Could you please do me a BIG favour and give this plugin a 5-star rating on WordPress? It won\'t take more than a minute, and help me spread the word and boost my motivation. - Dipak C. Gajjar </p>';
-		$notice_contents .= '<p> <a href="#" id="letMeReview" class="button button-primary">Yes, you deserve it</a> &nbsp; <a href="#" id="willReviewLater" class="button button-primary">Maybe later</a> &nbsp; <a href="#" id="alredyReviewed" class="button button-primary">I already did it</a> &nbsp; <a href="#" id="noThanks" class="button button-primary">No, Thanks</a> </p>';
+		$notice_contents .= '<p> <a href="#" id="wpsmy_letMeReview" class="button button-primary">Yes, you deserve it</a> &nbsp; <a href="#" id="wpsmy_willReviewLater" class="button button-primary">Maybe later</a> &nbsp; <a href="#" id="wpsmy_alredyReviewed" class="button button-primary">I already did it</a> &nbsp; <a href="#" id="wpsmy_noThanks" class="button button-primary">No, Thanks</a> </p>';
 		?>
 		<div class="notice notice-info is-dismissible" id="wpsmy_notice_div"> <?php _e( $notice_contents, 'wp-performance-score-booster' ); ?> </div>
 		<script type="text/javascript">
@@ -55,7 +55,7 @@ function wpsmy_submit_review_notice() {
 				var loc = location.href;
 				// loc += loc.indexOf("?") === -1 ? "?" : "&";
 				// Yes, you deserve it
-				$j("#letMeReview").on('click', function() {
+				$j("#wpsmy_letMeReview").on('click', function() {
 					$j('#wpsmy_notice_div').slideUp();
 					$j.ajax({
 						url: loc,
@@ -69,7 +69,7 @@ function wpsmy_submit_review_notice() {
 					});
 				});
 				// Maybe later
-				$j("#willReviewLater").on('click', function() {
+				$j("#wpsmy_willReviewLater").on('click', function() {
 					$j('#wpsmy_notice_div').slideUp();
 					$j.ajax({
 						url: loc,
@@ -83,7 +83,7 @@ function wpsmy_submit_review_notice() {
 					});
 				});
 				// I already did it
-				$j("#alredyReviewed").on('click', function() {
+				$j("#wpsmy_alredyReviewed").on('click', function() {
 					$j('#wpsmy_notice_div').slideUp();
 					$j.ajax({
 						url: loc,
@@ -94,7 +94,7 @@ function wpsmy_submit_review_notice() {
 					});
 				});
 				// No, thanks
-				$j("#noThanks").on('click', function() {
+				$j("#wpsmy_noThanks").on('click', function() {
 					$j('#wpsmy_notice_div').slideUp();
 					$j.ajax({
 						url: loc,
