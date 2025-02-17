@@ -243,7 +243,11 @@ function wpsmy_minify_html( $buffer ) {
 
 	// Calculate savings
 	$final = strlen( $buffer );
-	$savings = round( ( ( $initial - $final ) / $initial * 100 ), 3 );
+	if ($initial > 0) {
+		$savings = round((($initial - $final) / $initial * 100), 3);
+	} else {
+		$savings = 0; // Avoid division by zero
+	}
 
 	// Store the comment in a global variable instead of appending to the buffer
 	if ( $savings > 0 ) {
