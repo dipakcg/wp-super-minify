@@ -4,7 +4,7 @@ Tags: minify, compress, html, css, javascript, js, performance, load, psi, pages
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3S8BRPLWLNQ38
 Requires at least: 3.5
 Tested up to: 6.7.2
-Stable tag: 2.0
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +74,10 @@ No.
 5. Google PageSpeed Insights Performance Results
 
 == Changelog ==
+= 2.0.1, February 22, 2025 =
+* Improved: Minor code enhancements, including plugin update checks
+* Improved: Enhanced user experience for plugin review notice
+
 = 2.0, February 16, 2025 =
 * Fully rebuilt with a new, optimized codebase.
 * Improved performance, efficiency, and compatibility.
@@ -82,9 +86,9 @@ No.
 * Bug fixes and stability improvements.
 
 = 1.6, September 02, 2023 =
-* Improve: Security — CSRF Check
-* Improve: Data Sanitization / Escaping
-* Improve: Removed Promos, News and Updates, and recommendations area completely to make options page more clean
+* Improved: Security — CSRF Check
+* Improvde: Data Sanitization / Escaping
+* Improved: Removed Promos, News and Updates, and recommendations area completely to make options page more clean
 
 = 1.5.1, March 21, 2017 =
 * Improved Promos, News and Updates, and recommendations area.

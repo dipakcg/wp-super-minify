@@ -30,21 +30,13 @@ add_action( 'wpsmy_rating_system_action', 'wpsmy_rating_checker' );
 function wpsmy_submit_review_notice() {
 	global $wpsmy_plugin_version;
 
-	/* Display review plugin notice if plugin updated */
-	// only applies to older versions of the plugin (older than 1.9.1) where option isn't set
-	// As version 2.0 is a major release, let's force users to submit review on wordpress.org
-	if ( isset( $_GET['update-applied'] ) && $_GET['update-applied'] == 'true' ) {
-		if ( FALSE === get_option('wpsmy_review_notice' || wpsmy_PLUGIN_VERSION == '2.0' ) ) {
-			update_option( 'wpsmy_review_notice', "on" );
-		}
-	}
-
 	/* Check transient that's been set on plugin activation or check if user has already submitted review */
 	// if( get_transient( 'wpsmy_submit_review_transient' ) || !get_user_meta( $user_id, 'wpsmy_submit_review_dismissed' ) ) {
 	if( get_option( 'wpsmy_review_notice') && get_option( 'wpsmy_review_notice' ) == "on"  ) {
 
-		$notice_contents = '<p> Thank you for using <strong>WP Super Minify</strong>. </p>';
-		$notice_contents .= '<p> Could you please do me a BIG favour and give this plugin a 5-star rating on WordPress? It won\'t take more than a minute, and help me spread the word and boost my motivation. - Dipak C. Gajjar </p>';
+		$notice_contents = '<p>🙏 Thank you for using <strong>WP Super Minify</strong>! </p>';
+		$notice_contents .= '<p> This plugin is completely free, and I don’t earn anything from it — I built it to help the community. If you find it useful, a <a href="//wordpress.org/support/plugin/wp-super-minify/reviews/?rate=5#new-post" target="_blank">5-star review on WordPress.org</a> would mean a lot! It takes less than a minute but makes a huge difference in supporting the development of the plugin. Your support keeps me motivated! 🙌 ';
+		$notice_contents .= '<p>— Dipak C. Gajjar </p>';
 		$notice_contents .= '<p> <a href="#" id="wpsmy_letMeReview" class="button button-primary">Yes, you deserve it</a> &nbsp; <a href="#" id="wpsmy_willReviewLater" class="button button-primary">Maybe later</a> &nbsp; <a href="#" id="wpsmy_alredyReviewed" class="button button-primary">I already did it</a> &nbsp; <a href="#" id="wpsmy_noThanks" class="button button-primary">No, Thanks</a> </p>';
 		?>
 		<div class="notice notice-info is-dismissible" id="wpsmy_notice_div"> <?php _e( $notice_contents, 'wp-performance-score-booster' ); ?> </div>

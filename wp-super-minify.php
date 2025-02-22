@@ -3,14 +3,14 @@
 Plugin Name: WP Super Minify
 Plugin URI: https://github.com/dipakcg/wp-super-minify
 Description: Smartly minify, compress and cache HTML, CSS & JavaScript files to boost website speed. 🚀
-Version: 2.0
+Version: 2.0.1
 Author: Dipak C. Gajjar
 Author URI: https://dipakgajjar.com
 */
 
 // Define plugin version for future releases
 if ( !defined ('WPSMY_PLUGIN_VERSION_NUM' ) ) {
-    define( 'WPSMY_PLUGIN_VERSION_NUM', '2.0' );
+    define( 'WPSMY_PLUGIN_VERSION_NUM', '2.0.1' );
 }
 if ( !defined ('WPSMY_MINIFY_LIBRARY_PATH' ) ) {
 	define( 'WPSMY_MINIFY_LIBRARY_PATH', plugin_dir_path( __FILE__ ) . 'includes/min' );
@@ -34,8 +34,6 @@ require_once( WPSMY_MINIFY_LIBRARY_PATH . "/src/CSS.php" );
 require_once( WPSMY_MINIFY_LIBRARY_PATH . "/src/JS.php" );
 require_once( WPSMY_MINIFY_LIBRARY_PATH . "/../path-converter/ConverterInterface.php" );
 require_once( WPSMY_MINIFY_LIBRARY_PATH . '/../path-converter/Converter.php' );
-
-update_option( 'wpsmy_plugin_version', WPSMY_PLUGIN_VERSION_NUM );
 
 // Create Cache directories and sub-directories for CSS and JS
 if ( !file_exists( WPSMY_CACHE_DIR ) ) mkdir( WPSMY_CACHE_DIR, 0755, true );
@@ -195,6 +193,25 @@ function wpsmy_admin_options() {
 	</div>
 	<?php
 }
+
+// Check if the plugin has been updated and display a review notice if applicable.
+function wpsmy_check_plugin_update() {
+	$saved_version = get_option('wpsmy_plugin_version' ); // Default version if not set
+
+	/* Display review plugin notice if plugin updated */
+	// only applies to older versions of the plugin (older than 2.0.1) where option isn't set
+	// As version 2.0 is a major release, let's ask users to submit review on wordpress.org
+	if ( version_compare( $saved_version, WPSMY_PLUGIN_VERSION_NUM, '<' ) || $saved_version === FALSE ) {
+		// Version is less than 2.0.1, show the review notice
+		if ( $saved_version && in_array( $saved_version, ['2.0', '1.6'], true ) ) {
+			update_option( 'wpsmy_review_notice', 'on' );
+		}
+		
+		// Update the version in the database to prevent repeated notices
+		update_option( 'wpsmy_plugin_version', WPSMY_PLUGIN_VERSION_NUM );
+	}
+}
+add_action( 'admin_init', 'wpsmy_check_plugin_update' );
 
 // Make the default value of enable javascript and enable CSS to true on plugin activation
 function wpsmy_activate_plugin() {
